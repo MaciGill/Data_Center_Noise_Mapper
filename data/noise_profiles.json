@@ -4,7 +4,7 @@
       "id": "graven_hill",
       "name": "Graven Hill",
       "source": "Noise and Vibration Assessment – Scenario 3",
-      "description": "Profil demonstracyjny na podstawie raportu Graven Hill",
+      "description": "Demo profile based on the Graven Hill report",
       "levels": [
         {"db": 65, "radius_m": 100, "color": "#8B0000"},
         {"db": 60, "radius_m": 180, "color": "#E53935"},
@@ -17,9 +17,9 @@
     },
     {
       "id": "demo_profile",
-      "name": "Profil testowy",
-      "source": "Dane demonstracyjne",
-      "description": "Przykładowy profil do testowania przełączania",
+      "name": "Test profile",
+      "source": "Demo data",
+      "description": "Example profile for testing profile switching",
       "levels": [
         {"db": 65, "radius_m": 150, "color": "#8B0000"},
         {"db": 60, "radius_m": 250, "color": "#E53935"},

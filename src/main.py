@@ -7,7 +7,7 @@ from jinja2 import Template
 
 
 # --------------------------------------------------
-# 1. Ścieżki projektu
+# 1. Project paths
 # --------------------------------------------------
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +20,7 @@ OUTPUT_DIR.mkdir(exist_ok=True)
 
 
 # --------------------------------------------------
-# 2. Wczytanie profili
+# 2. Load profiles
 # --------------------------------------------------
 
 with open(DATA_FILE, "r", encoding="utf-8") as file:
@@ -29,22 +29,22 @@ with open(DATA_FILE, "r", encoding="utf-8") as file:
 profiles = data["profiles"]
 
 if not profiles:
-    raise ValueError("Brak profili hałasu w pliku JSON.")
+    raise ValueError("No noise profiles found in the JSON file.")
 
 profile_ids = [profile["id"] for profile in profiles]
 
 if len(profile_ids) != len(set(profile_ids)):
-    raise ValueError("Identyfikatory profili muszą być unikalne.")
+    raise ValueError("Profile IDs must be unique.")
 
 for profile in profiles:
     if not profile.get("levels"):
         raise ValueError(
-            f"Profil {profile['id']} nie zawiera poziomów hałasu."
+            f"Profile {profile['id']} contains no noise levels."
         )
 
 
 # --------------------------------------------------
-# 3. Ustawienia mapy
+# 3. Map settings
 # --------------------------------------------------
 
 START_LAT = 49.8225
@@ -60,13 +60,13 @@ noise_map = folium.Map(
 
 
 # --------------------------------------------------
-# 4. Marker źródła hałasu
+# 4. Noise source marker
 # --------------------------------------------------
 
 marker = folium.Marker(
     location=[START_LAT, START_LON],
-    tooltip="Przeciągnij, aby przesunąć źródło hałasu",
-    popup="Źródło hałasu",
+    tooltip="Drag to move the noise source",
+    popup="Noise source",
     draggable=True,
     icon=folium.Icon(
         color="red",
@@ -79,7 +79,7 @@ marker.add_to(noise_map)
 
 
 # --------------------------------------------------
-# 5. Tworzenie stref dla wszystkich profili
+# 5. Create zones for all profiles
 # --------------------------------------------------
 
 circle_objects = {}
@@ -111,7 +111,7 @@ for profile in profiles:
 
 
 # --------------------------------------------------
-# 6. Panel wyboru profilu i informacji
+# 6. Profile selection and information panel
 # --------------------------------------------------
 
 profile_data = []
@@ -157,7 +157,7 @@ class NoiseProfileControl(MacroElement):
 
         var circles = {};
 
-        // Referencje do wszystkich okręgów
+        // References to all circles
         Object.keys(circleNames).forEach(function(profileId) {
 
             circles[profileId] = circleNames[profileId].map(
@@ -168,7 +168,7 @@ class NoiseProfileControl(MacroElement):
 
         });
 
-        // Panel sterowania
+        // Control panel
         var control = L.control({position: "topright"});
 
         control.onAdd = function(map) {
@@ -193,7 +193,7 @@ class NoiseProfileControl(MacroElement):
 
             div.innerHTML = `
                 <div style="font-weight:bold; margin-bottom:8px;">
-                    Profil hałasu data center
+                    Data center noise profile
                 </div>
 
                 <select id="profileSelector"
@@ -210,7 +210,7 @@ class NoiseProfileControl(MacroElement):
                 <hr>
 
                 <div style="font-weight:bold;">
-                    Położenie źródła
+                    Source location
                 </div>
 
                 <div id="coordinates"
@@ -225,7 +225,7 @@ class NoiseProfileControl(MacroElement):
 
         control.addTo({{ this._parent.get_name() }});
 
-        // Aktualizacja widoczności stref
+        // Update zone visibility
         function updateProfile(profileId) {
 
             activeProfileId = profileId;
@@ -255,11 +255,11 @@ class NoiseProfileControl(MacroElement):
 
             document.getElementById(
                 "profileSource"
-            ).textContent = "Źródło: " + selected.source;
+            ).textContent = "Source: " + selected.source;
 
         }
 
-        // Przesuwanie wszystkich profili razem z markerem
+        // Move all profiles with the marker
         function updatePosition(position) {
 
             Object.keys(circles).forEach(function(profileId) {
@@ -292,7 +292,7 @@ class NoiseProfileControl(MacroElement):
             updateProfile(event.target.value);
         });
 
-        // Inicjalizacja
+        // Initialization
         document.getElementById(
             "profileSelector"
         ).value = activeProfileId;
@@ -305,7 +305,7 @@ class NoiseProfileControl(MacroElement):
 
 
 # --------------------------------------------------
-# 7. Dodanie kontrolera do mapy
+# 7. Add the control to the map
 # --------------------------------------------------
 
 control = NoiseProfileControl(
@@ -319,7 +319,7 @@ noise_map.add_child(control)
 
 
 # --------------------------------------------------
-# 8. Legenda
+# 8. Legend
 # --------------------------------------------------
 
 legend = """
@@ -334,7 +334,7 @@ border-radius: 8px;
 box-shadow: 0 1px 6px rgba(0,0,0,0.3);
 font-size: 12px;
 ">
-<b>Poziomy hałasu</b><br>
+<b>Noise levels</b><br>
 <span style="color:#8B0000;">●</span> 65 dB(A)<br>
 <span style="color:#E53935;">●</span> 60 dB(A)<br>
 <span style="color:#FB8C00;">●</span> 55 dB(A)<br>
@@ -351,9 +351,9 @@ noise_map.get_root().html.add_child(
 
 
 # --------------------------------------------------
-# 9. Zapis mapy
+# 9. Save the map
 # --------------------------------------------------
 
 noise_map.save(OUTPUT_FILE)
 
-print(f"Mapa została zapisana: {OUTPUT_FILE}")
+print(f"Map saved to: {OUTPUT_FILE}")
