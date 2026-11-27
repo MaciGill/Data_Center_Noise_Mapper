@@ -1,0 +1,34 @@
+{
+  "profiles": [
+    {
+      "id": "graven_hill",
+      "name": "Graven Hill",
+      "source": "Noise and Vibration Assessment – Scenario 3",
+      "description": "Profil demonstracyjny na podstawie raportu Graven Hill",
+      "levels": [
+        {"db": 65, "radius_m": 100, "color": "#8B0000"},
+        {"db": 60, "radius_m": 180, "color": "#E53935"},
+        {"db": 55, "radius_m": 280, "color": "#FB8C00"},
+        {"db": 50, "radius_m": 400, "color": "#FDD835"},
+        {"db": 45, "radius_m": 550, "color": "#7CB342"},
+        {"db": 40, "radius_m": 720, "color": "#26A69A"},
+        {"db": 35, "radius_m": 900, "color": "#42A5F5"}
+      ]
+    },
+    {
+      "id": "demo_profile",
+      "name": "Profil testowy",
+      "source": "Dane demonstracyjne",
+      "description": "Przykładowy profil do testowania przełączania",
+      "levels": [
+        {"db": 65, "radius_m": 150, "color": "#8B0000"},
+        {"db": 60, "radius_m": 250, "color": "#E53935"},
+        {"db": 55, "radius_m": 380, "color": "#FB8C00"},
+        {"db": 50, "radius_m": 520, "color": "#FDD835"},
+        {"db": 45, "radius_m": 680, "color": "#7CB342"},
+        {"db": 40, "radius_m": 850, "color": "#26A69A"},
+        {"db": 35, "radius_m": 1100, "color": "#42A5F5"}
+      ]
+    }
+  ]
+}

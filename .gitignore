@@ -1,0 +1,23 @@
+# Python environments and cache
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+
+# Local secrets and environment configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Local or generated data; keep only the non-sensitive sample profile
+/data/*
+!/data/noise_profiles.json
+/output/*
+!/output/.gitkeep
+
+# Jupyter and operating-system files
+.ipynb_checkpoints/
+.DS_Store
+Thumbs.db
